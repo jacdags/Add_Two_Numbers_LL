@@ -13,8 +13,63 @@
 
 #include <iostream>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+
+using namespace std;
+
+struct ListNode
+{
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+{
+    ListNode* result = new ListNode();
+    auto it_Result = result;
+    
+    while(l1 != nullptr && l2 != nullptr)
+    {
+        int sum = l1->val + l2->val;
+        
+        if(l1->next != nullptr || l2->next != nullptr)
+        {
+            it_Result->next = new ListNode();
+            it_Result->val += sum%10;
+            it_Result->next->val = sum/10;
+        }
+        else
+        {
+            it_Result->val += sum;
+        }
+        
+        it_Result = it_Result->next;
+        l1 = l1->next;
+        l2 = l2->next;
+    }
+    
+    return result;
+}
+
+int main(int argc, const char * argv[])
+{
+    
+    ListNode* num1 =  new ListNode(9, new ListNode(4, new ListNode(3)));
+    ListNode* num2 =  new ListNode(5, new ListNode(6, new ListNode(4)));
+    ListNode* result = addTwoNumbers(num1, num2);
+    
+    cout << "Result: ";
+    while(result != nullptr)
+    {
+        cout << result->val;
+        result = result->next;
+    }
+    cout << endl;
+
     return 0;
 }
+
+
+
