@@ -27,29 +27,32 @@ struct ListNode
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 {
     ListNode* result = new ListNode();
-    auto it_Result = result;
+    auto dummyResult = result;
     
-    //if one list longer than other
-    //if one list null
+    if(l1 == nullptr || l2 == nullptr)
+        return (l1 == nullptr ? l2 : l1);
 
-    while(l1 != nullptr && l2 != nullptr)
+    while(l1 != nullptr || l2 != nullptr)
     {
-        int sum = l1->val + l2->val;
+        if(l1 == nullptr)
+            l1 = new ListNode();
+        if(l2 == nullptr)
+            l2 = new ListNode();
         
-        if(l1->next != nullptr || l2->next != nullptr)
+        int sum = l1->val + l2->val + dummyResult->val;
+        
+        if(l1->next != nullptr || l2->next != nullptr || sum/10 > 0)
         {
-            it_Result->next = new ListNode();
-            it_Result->val += sum%10;
-            it_Result->next->val = sum/10;
+            dummyResult->next = new ListNode(sum/10);
+            dummyResult->val = sum%10;
+            dummyResult->next->val = sum/10;
         }
         else
         {
-            if(sum/10 > 0)
-                it_Result->next = new ListNode(sum/10);
-            it_Result->val += sum%10;
+            dummyResult->val = sum;
         }
         
-        it_Result = it_Result->next;
+        dummyResult = dummyResult->next;
         l1 = l1->next;
         l2 = l2->next;
     }
@@ -59,8 +62,8 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 
 int main(int argc, const char * argv[])
 {
-    ListNode* num1 =  new ListNode(9, new ListNode(4, new ListNode(9)));
-    ListNode* num2 =  new ListNode(5, new ListNode(6, new ListNode(4)));
+    ListNode* num1 =  new ListNode(9, new ListNode(4, new ListNode(4, new ListNode(9, new ListNode(2)))));
+    ListNode* num2 =  new ListNode(5, new ListNode(6, new ListNode(6)));
     ListNode* result = addTwoNumbers(num1, num2);
     
     cout << "Result: ";
