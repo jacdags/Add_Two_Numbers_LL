@@ -13,7 +13,6 @@
 
 #include <iostream>
 
-
 using namespace std;
 
 struct ListNode
@@ -30,6 +29,9 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
     ListNode* result = new ListNode();
     auto it_Result = result;
     
+    //if one list longer than other
+    //if one list null
+
     while(l1 != nullptr && l2 != nullptr)
     {
         int sum = l1->val + l2->val;
@@ -42,7 +44,9 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
         }
         else
         {
-            it_Result->val += sum;
+            if(sum/10 > 0)
+                it_Result->next = new ListNode(sum/10);
+            it_Result->val += sum%10;
         }
         
         it_Result = it_Result->next;
@@ -55,8 +59,7 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 
 int main(int argc, const char * argv[])
 {
-    
-    ListNode* num1 =  new ListNode(9, new ListNode(4, new ListNode(3)));
+    ListNode* num1 =  new ListNode(9, new ListNode(4, new ListNode(9)));
     ListNode* num2 =  new ListNode(5, new ListNode(6, new ListNode(4)));
     ListNode* result = addTwoNumbers(num1, num2);
     
