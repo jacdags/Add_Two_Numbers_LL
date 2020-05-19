@@ -60,20 +60,41 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
     return result;
 }
 
+void deleteList(ListNode* head_ref)
+{
+      
+ListNode* current = head_ref;
+ListNode* next;
+  
+while (current != NULL)
+{
+    next = current->next;
+    free(current);
+    current = next;
+}
+      
+*head_ref = NULL;
+}
+
 int main(int argc, const char * argv[])
 {
     ListNode* num1 =  new ListNode(9, new ListNode(4, new ListNode(4, new ListNode(9, new ListNode(2)))));
     ListNode* num2 =  new ListNode(5, new ListNode(6, new ListNode(6)));
     ListNode* result = addTwoNumbers(num1, num2);
+    ListNode* ResultIterator = result;
     
     cout << "Result: ";
-    while(result != nullptr)
+    while(ResultIterator != nullptr)
     {
-        cout << result->val;
-        result = result->next;
+        cout << ResultIterator->val;
+        ResultIterator = ResultIterator->next;
     }
     cout << endl;
-
+    
+    deleteList(num1);
+    deleteList(num2);
+    deleteList(result);
+    
     return 0;
 }
 
